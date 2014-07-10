@@ -22,8 +22,8 @@ public class PrepareAuction extends SimpleBehaviour {
 		System.out.println("Waiting for a bidder");
 		ACLMessage msgRx = myAgent.receive();
 		if (msgRx != null) {
-			System.out.println("Registering bidde: "
-					+ msgRx.getSender().getName());
+			System.out.println("Registering bidder: "
+					+ msgRx.getSender().getLocalName());
 			AuctionMain.biddersList.addLast(msgRx.getSender().getLocalName());
 			bidderNumber++;
 		} else {

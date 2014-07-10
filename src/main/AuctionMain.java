@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import behaviors.EnglishAuctionInitiator;
 import behaviors.PrepareAuction;
 import behaviors.PrepareCFP;
+import behaviors.ProposeValue;
 import behaviors.SendAuction;
 import behaviors.SendCFP;
 import behaviors.TerminateBidingIteration;
@@ -20,8 +21,11 @@ public class AuctionMain extends Agent {
 	private PrepareCFP prepareCFP;
 	private SendAuction sendAuction;
 	private SendCFP sendCFP;
+	private ProposeValue proposeValue;
 	private TerminateBidingIteration terminate;
 	public static LinkedList<String> biddersList = new LinkedList<String>();
+	private int privateValue = 100;
+	public static int initialValue = 0;
 
 	public AuctionMain() {
 		initiator = new EnglishAuctionInitiator();
@@ -29,6 +33,8 @@ public class AuctionMain extends Agent {
 		prepareCFP = new PrepareCFP();
 		sendAuction = new SendAuction();
 		sendCFP = new SendCFP();
+		proposeValue = new ProposeValue();
+
 		terminate = new TerminateBidingIteration();
 	}
 
@@ -46,6 +52,8 @@ public class AuctionMain extends Agent {
 		initiator
 				.registerState(prepareCFP, FSMTransitionUtils.PREPARE_CFP_NAME);
 		initiator.registerState(sendCFP, FSMTransitionUtils.SEND_CFP_NAME);
+		initiator.registerState(proposeValue,
+				FSMTransitionUtils.PROPOSE_VALUE_NAME);
 
 		initiator.registerTransition(FSMTransitionUtils.PREPARE_AUCTION_NAME,
 				FSMTransitionUtils.SEND_AUCTION_NAME,
@@ -57,7 +65,7 @@ public class AuctionMain extends Agent {
 				FSMTransitionUtils.SEND_CFP_NAME,
 				FSMTransitionUtils.CFP_PREPARED_EVENT);
 		initiator.registerTransition(FSMTransitionUtils.SEND_CFP_NAME,
-				FSMTransitionUtils.TERMINATE_BIDING_ITERATION_NAME,
+				FSMTransitionUtils.PROPOSE_VALUE_NAME,
 				FSMTransitionUtils.CFP_SENT_EVENT);
 
 		addBehaviour(initiator);

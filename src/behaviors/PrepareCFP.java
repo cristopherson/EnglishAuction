@@ -13,7 +13,8 @@ public class PrepareCFP extends OneShotBehaviour {
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
-		System.out.println("Preparin CFP message");
+		// This is a dummy state for now
+		System.out.println("Preparing CFP message");
 
 	}
 
