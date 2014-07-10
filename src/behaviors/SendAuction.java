@@ -1,5 +1,6 @@
 package behaviors;
 
+import main.AuctionMain;
 import main.FSMTransitionUtils;
 import jade.core.behaviours.OneShotBehaviour;
 
@@ -13,8 +14,9 @@ public class SendAuction extends OneShotBehaviour {
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
+		for (String bidder : AuctionMain.biddersList)
+			System.out.println(bidder + " is registered");
 		System.out.println("Auction is ready");
-
 	}
 
 	@Override

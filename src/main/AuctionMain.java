@@ -1,5 +1,7 @@
 package main;
 
+import java.util.LinkedList;
+
 import behaviors.EnglishAuctionInitiator;
 import behaviors.PrepareAuction;
 import behaviors.PrepareCFP;
@@ -7,7 +9,6 @@ import behaviors.SendAuction;
 import behaviors.SendCFP;
 import behaviors.TerminateBidingIteration;
 import jade.core.Agent;
-import jade.domain.FIPANames.InteractionProtocol;
 
 public class AuctionMain extends Agent {
 	/**
@@ -20,6 +21,7 @@ public class AuctionMain extends Agent {
 	private SendAuction sendAuction;
 	private SendCFP sendCFP;
 	private TerminateBidingIteration terminate;
+	public static LinkedList<String> biddersList = new LinkedList<String>();
 
 	public AuctionMain() {
 		initiator = new EnglishAuctionInitiator();
@@ -31,9 +33,8 @@ public class AuctionMain extends Agent {
 	}
 
 	protected void setup() {
-		// Printout a welcome message
-		System.out.println("Hello! Buyer-agent " + getAID().getName()
-				+ " is ready with " + InteractionProtocol.FIPA_ENGLISH_AUCTION);
+		System.out.println("This is " + getAID().getName()
+				+ " agent preparing the english auction.");
 
 		initiator.registerFirstState(prepareAuction,
 				FSMTransitionUtils.PREPARE_AUCTION_NAME);
@@ -60,5 +61,24 @@ public class AuctionMain extends Agent {
 				FSMTransitionUtils.CFP_SENT_EVENT);
 
 		addBehaviour(initiator);
+		/*
+		 * addBehaviour(new CyclicBehaviour() {
+		 * 
+		 * @Override public void action() { ACLMessage msg = new
+		 * ACLMessage(ACLMessage.INFORM); msg.addReceiver(new AID("auction-1",
+		 * AID.ISLOCALNAME)); msg.setLanguage("English");
+		 * msg.setOntology("Weather-forecast-ontology");
+		 * msg.setContent("Today it’s raining"); send(msg);
+		 * 
+		 * 
+		 * } });
+		 * 
+		 * addBehaviour(new CyclicBehaviour() {
+		 * 
+		 * @Override public void action() { ACLMessage msgRx = receive(); if
+		 * (msgRx != null) { System.out.println(msgRx); } else { block(); } }
+		 * 
+		 * });
+		 */
 	}
 }
